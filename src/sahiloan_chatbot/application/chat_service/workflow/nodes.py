@@ -29,10 +29,7 @@ class Nodes:
             }
         except Exception as e:
             logger.exception(f"intent_router_error: | type: {type(e).__name__} | message: {str(e)}")
-            return {
-                "route_to": "end",
-                "messages": [AIMessage(content=AGENT_ERROR_MESSAGE)],
-            }
+            return self._agent_end_state(AGENT_ERROR_MESSAGE)
     
     def general_agent(self, state: ChatState) -> ChatState:
         pass
