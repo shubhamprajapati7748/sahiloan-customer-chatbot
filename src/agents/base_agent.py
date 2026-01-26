@@ -1,0 +1,1 @@
+# Base Agent - Common agent functionality and interface

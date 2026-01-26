@@ -1,0 +1,32 @@
+# Core LLM and Workflow
+langchain
+langchain-community
+langchain-openai
+langchain-anthropic
+langgraph
+
+# Vector Store and Embeddings
+chromadb
+faiss-cpu
+sentence-transformers
+
+# Document Processing
+pypdf
+python-docx
+pillow
+
+# API and Environment
+python-dotenv
+pydantic
+pydantic-settings
+
+# Utilities
+numpy
+pandas
+
+# Logging and Monitoring
+loguru
+
+# Testing
+pytest
+pytest-asyncio

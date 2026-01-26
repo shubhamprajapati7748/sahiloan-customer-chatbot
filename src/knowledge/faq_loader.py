@@ -1,0 +1,1 @@
+# Load and process FAQ data for ingestion
