@@ -97,6 +97,18 @@ class Settings(BaseSettings):
         min_length=10,
         description="ElevenLabs API key (required)"
     )
+    
+    # Pinecone API key
+    PINECONE_API_KEY: SecretStr = Field(
+        ...,
+        min_length=10,
+        description="Pinecone API key (required)"
+    )
+    
+    PINECONE_INDEX_NAME: str = Field(
+        default="sahiloan",
+        description="Pinecone index name"
+    )
 
     # ========================================
     # MODEL CONFIGURATIONS
