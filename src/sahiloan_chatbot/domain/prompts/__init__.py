@@ -1,0 +1,17 @@
+"""
+Prompts module for Sahiloan chatbot.
+"""
+
+from .intent_router_prompt import INTENT_ROUTER_SYSTEM_PROMPT
+from .general_agent_prompt import (
+    GENERAL_AGENT_SYSTEM_PROMPT,
+    GENERAL_AGENT_WITH_CONTEXT_TEMPLATE,
+    GENERAL_AGENT_NO_CONTEXT_TEMPLATE
+)
+
+__all__ = [
+    "INTENT_ROUTER_SYSTEM_PROMPT",
+    "GENERAL_AGENT_SYSTEM_PROMPT",
+    "GENERAL_AGENT_WITH_CONTEXT_TEMPLATE",
+    "GENERAL_AGENT_NO_CONTEXT_TEMPLATE"
+]

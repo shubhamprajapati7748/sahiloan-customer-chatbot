@@ -32,3 +32,14 @@ def create_chat_graph():
 
     return graph_builder
 
+
+
+@lru_cache(maxsize=1)
+def create_intent_router_graph():
+    graph_builder = StateGraph[ChatState, None, ChatState, ChatState](ChatState)
+    graph_builder.add_node("intent_router", nodes.intent_router)
+    graph_builder.add_edge(START, "intent_router")
+    graph_builder.add_edge("intent_router", END)
+    return graph_builder
+
+
