@@ -1,1 +1,0 @@
-# Vector store setup for knowledge retrieval (ChromaDB, Pinecone, etc.)

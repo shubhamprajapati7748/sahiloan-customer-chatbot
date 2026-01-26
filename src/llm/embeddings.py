@@ -1,1 +1,0 @@
-# Embedding models for knowledge retrieval

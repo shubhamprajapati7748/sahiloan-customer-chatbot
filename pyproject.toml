@@ -1,0 +1,52 @@
+[project]
+name = "sahiloan-chatbot"
+version = "0.1.0"
+description = "This projuct is for sahiloan customer chatbot"
+authors = [
+    {name = "shubham prajapati", email = "shubhamprajapati7748@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "fastapi[standard]>=0.115.6",
+    "groq>=0.13.1",
+    "langchain-community>=0.3.13",
+    "langchain-groq>=0.2.2",
+    "langchain>=0.3.13",
+    "pydantic==2.10.0",
+    "langgraph>=0.2.60",
+    "langchain-openai>=0.2.14",
+    "pydantic-settings>=2.7.0",
+    "loguru>=0.7.2",
+    "opik>=1.4.11",
+    "uvicorn>=0.34.3",
+    "langchain-google-genai (>=2.1.8,<3.0.0)",
+    "ipython>=8.0.0",
+    "python-dotenv (>=1.1.1,<2.0.0)",
+    "python-dateutil (>=2.9.0.post0,<3.0.0)",
+    "elevenlabs (>=2.23.0,<3.0.0)",
+    "nest-asyncio (>=1.6.0,<2.0.0)"
+]
+
+[tool.poetry]
+name = "sahiloan"
+version = "0.1.0"
+description = ""
+authors = ["shubham prajapati <shubhamprajapati7748@gmail.com>"]
+readme = "README.md"
+packages = [{include = "sahiloan_chatbot", from = "src"}]
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^7.1.0"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "Q", "I"]
+ignore = ["E501"]

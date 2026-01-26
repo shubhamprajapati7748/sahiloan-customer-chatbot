@@ -1,1 +1,0 @@
-# Application Agent - Guides new loan applications
