@@ -1,0 +1,102 @@
+[
+    {
+        "input": "What is a home loan and how does it work in India?",
+        "reference": "general_agent"
+    },
+    {
+        "input": "Difference between home loan and loan against property?",
+        "reference": "general_agent"
+    },
+    {
+        "input": "Is sahiloan is trustworth?",
+        "reference": "general_agent"
+    },
+    {
+        "input": "What types of loan does sahiloan handle?",
+        "reference": "general_agent"
+    },
+    {
+        "input": "How long does the loan process usually take with sahiloan?",
+        "reference": "general_agent"
+    },
+    {
+        "input": "How many EMIs have I already paid for my SBI home loan?",
+        "reference": "loan_agent"
+    },
+    {
+        "input": "What is my current outstanding balance on the home loan?",
+        "reference": "loan_agent"
+    },
+    {
+        "input": "Whats the current interest rate for my loan againt property?",
+        "reference": "loan_agent"
+    },
+    {
+        "input": "How many loans I have taken?",
+        "reference": "loan_agent"
+    },
+    {
+        "input": "What the current interest rate for my home loan?",
+        "reference": "loan_agent"
+    },
+    {
+        "input": "I am uploading my sale deed. Please check if it is acceptable for home loan.",
+        "reference": "document_agent"
+    },
+    {
+        "input": "Here is the EC document. Let me know if there are any legal issues.",
+        "reference": "document_agent"
+    },
+    {
+        "input": "This is my bank sanction letter PDF. Please review it.",
+        "reference": "document_agent"
+    },
+    {
+        "input": "Is this CC copy acceptable for loan against property?",
+        "reference": "document_agent"
+    },
+    {
+        "input": "Summarize my credit score report",
+        "reference": "document_agent"
+    },
+    {
+        "input": "My loan was rejected even after initial approval. What should I do now?",
+        "reference": "escalation_agent"
+    },
+    {
+        "input": "The builder is delaying OC and bank is not disbursing the loan. Please help.",
+        "reference": "escalation_agent"
+    },
+    {
+        "input": "There is a family dispute on the property. Can I still get a loan?",
+        "reference": "escalation_agent"
+    },
+    {
+        "input": "I have spoken to multiple agents but no one is giving clear answers.",
+        "reference": "escalation_agent"
+    },
+    {
+        "input": "I want to talk to a human loan expert urgently.",
+        "reference": "escalation_agent"
+    },
+    {
+        "input": "Thanks, that answers my question.",
+        "reference": "end"
+    },
+    {
+        "input": "Okay, no further help needed.",
+        "reference": "end"
+    },
+    {
+        "input": "I am done for now.",
+        "reference": "end"
+    },
+    {
+        "input": "Great, I will come back later.",
+        "reference": "end"
+    },
+    {
+        "input": "Bye",
+        "reference": "end"
+    }
+]
