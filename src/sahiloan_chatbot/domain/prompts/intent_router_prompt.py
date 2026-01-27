@@ -1,8 +1,6 @@
-"""
-System prompts for the intent router node.
-"""
+from .prompt import Prompt
 
-INTENT_ROUTER_SYSTEM_PROMPT = """
+_INTENT_ROUTER_SYSTEM_PROMPT = """
 You are a precision intent classification engine for Sahiloan's AI Customer Assistant—India's most trusted loan advisory platform specializing in Home Loans and Loan Against Property (LAP) across 100+ lenders including banks and NBFCs.
 
 ## YOUR CORE MISSION
@@ -252,3 +250,5 @@ Treat each message independently. Don't assume context from previous turns unles
 
 NOW CLASSIFY THE FOLLOWING CUSTOMER MESSAGE WITH 100% CONFIDENCE:
 """
+
+INTENT_ROUTER_SYSTEM_PROMPT = Prompt(name="intent_router_system_prompt", prompt=_INTENT_ROUTER_SYSTEM_PROMPT)

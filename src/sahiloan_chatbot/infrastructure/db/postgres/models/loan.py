@@ -4,14 +4,14 @@ from typing import TYPE_CHECKING
 from sqlalchemy import UUID, ForeignKey, Integer, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from ..base import Base
+from ..base import Base, SerializerMixin
 
 if TYPE_CHECKING:
     from .user import User
 
 
-class UserLoan(Base):
-    __tablename__ = "user_loans"
+class Loan(Base, SerializerMixin):
+    __tablename__ = "loans"
 
     user_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True
@@ -41,9 +41,8 @@ class UserLoan(Base):
     user: Mapped["User"] = relationship("User", back_populates="loans")
 
     def to_dict(self):
-        return {
-            "id": str(self.id),
-            "user": self.user.to_dict(),
+        data = {
+            "id": self.id,
             "loan_id": self.loan_id,
             "loan_type": self.loan_type,
             "lender_name": self.lender_name,
@@ -56,3 +55,4 @@ class UserLoan(Base):
             "open_date": self.open_date,
             "due_date": self.due_date,
         }
+        return {k: self.serialize_value(v) for k, v in data.items()}

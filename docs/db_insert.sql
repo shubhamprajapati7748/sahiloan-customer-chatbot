@@ -35,7 +35,7 @@ VALUES
 
 
 
-INSERT INTO user_loans (
+INSERT INTO loans (
   id, user_id, loan_id, loan_type, lender_name,
   loan_amount, remaining_amount, interest_rate,
   tenure_months, emi_amount, status,
@@ -47,7 +47,7 @@ VALUES
   'aaaaaaa1-aaaa-aaaa-aaaa-aaaaaaaaaaa1',
   '11111111-1111-1111-1111-111111111111',
   'HL-1001',
-  'home_loan',
+  'Home Loan',
   'SBI',
   7500000.00,
   6200000.00,
@@ -64,7 +64,7 @@ VALUES
   'aaaaaaa2-aaaa-aaaa-aaaa-aaaaaaaaaaa2',
   '22222222-2222-2222-2222-222222222222',
   'HL-1002',
-  'home_loan',
+  'Home Loan',
   'HDFC',
   6000000.00,
   4800000.00,
@@ -81,7 +81,7 @@ VALUES
   'aaaaaaa3-aaaa-aaaa-aaaa-aaaaaaaaaaa3',
   '33333333-3333-3333-3333-333333333333',
   'HL-1003',
-  'home_loan',
+  'Home Loan',
   'ICICI',
   9000000.00,
   8700000.00,
@@ -98,7 +98,7 @@ VALUES
   'aaaaaaa4-aaaa-aaaa-aaaa-aaaaaaaaaaa4',
   '11111111-1111-1111-1111-111111111111',
   'HL-1004',
-  'home_loan',
+  'Home Loan',
   'LIC Housing Finance',
   4500000.00,
   0.00,
@@ -115,7 +115,7 @@ VALUES
 
 
 
-INSERT INTO user_loans (
+INSERT INTO loans (
   id,
   user_id,
   loan_id,
@@ -137,7 +137,7 @@ VALUES
   'bbbbbbb1-bbbb-bbbb-bbbb-bbbbbbbbbbb1',
   '22222222-2222-2222-2222-222222222222',
   'LAP-2001',
-  'loan_against_property',
+  'Loan Against Property',
   'Axis Bank',
   5000000.00,
   3500000.00,
@@ -153,8 +153,7 @@ VALUES
 
 
 
-
-INSERT INTO user_loans (
+INSERT INTO loans (
   id,
   user_id,
   loan_id,
@@ -176,7 +175,7 @@ VALUES
   'ccccccc1-cccc-cccc-cccc-ccccccccccc1',
   '22222222-2222-2222-2222-222222222222',
   'PL-3001',
-  'personal_loan',
+  'Personal Loan',
   'Kotak Mahindra',
   800000.00,
   420000.00,
@@ -193,7 +192,7 @@ VALUES
   'ccccccc2-cccc-cccc-cccc-ccccccccccc2',
   '33333333-3333-3333-3333-333333333333',
   'PL-3002',
-  'personal_loan',
+  'Personal Loan',
   'ICICI',
   500000.00,
   0.00,
@@ -209,7 +208,7 @@ VALUES
 
 
 
-INSERT INTO user_loans (
+INSERT INTO loans (
   id,
   user_id,
   loan_id,
@@ -231,7 +230,7 @@ VALUES
   'ddddddd1-dddd-dddd-dddd-ddddddddddd1',
   '11111111-1111-1111-1111-111111111111',
   'GL-4001',
-  'gold_loan',
+  'Gold Loan',
   'Muthoot Finance',
   350000.00,
   180000.00,

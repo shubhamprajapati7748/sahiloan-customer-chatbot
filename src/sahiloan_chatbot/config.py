@@ -85,5 +85,11 @@ class Settings(BaseSettings):
     PINECONE_API_KEY: SecretStr = Field(..., min_length=10, description="Pinecone API key (required)")
     PINECONE_INDEX_NAME: str = Field(default="sahiloan", description="Pinecone index name")
 
+    # ========================================
+    # EMBEDDING SETTINGS
+    # ========================================
+    EMBEDDING_MODEL: str = Field(default="text-embedding-3-small", description="Embedding model")
+    EMBEDDING_DIMENSIONS: int = Field(default=1024, description="Embedding dimensions")
+
 
 settings = Settings()

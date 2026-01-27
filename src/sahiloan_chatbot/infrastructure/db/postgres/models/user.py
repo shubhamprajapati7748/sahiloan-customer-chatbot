@@ -6,7 +6,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from ..base import Base
 
 if TYPE_CHECKING:
-    from .user_loan import UserLoan
+    from .user_loan import Loan
 
 
 class User(Base):
@@ -19,14 +19,15 @@ class User(Base):
 
     phone_number: Mapped[str] = mapped_column(String(15), nullable=False, unique=True, index=True)
 
-    # relationship with UserLoan
-    loans: Mapped[list["UserLoan"]] = relationship("UserLoan", back_populates="user", cascade="all, delete-orphan")
+    # relationship with Loan
+    loans: Mapped[list["Loan"]] = relationship("Loan", back_populates="user", cascade="all, delete-orphan")
 
     def to_dict(self):
-        return {
+        data = {
             "id": str(self.id),
             "first_name": self.first_name,
             "last_name": self.last_name,
             "email": self.email,
             "phone_number": self.phone_number,
         }
+        return {k: self.serialize_value(v) for k, v in data.items()}
