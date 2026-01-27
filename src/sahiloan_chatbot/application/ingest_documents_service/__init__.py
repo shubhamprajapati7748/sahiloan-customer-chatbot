@@ -1,4 +1,6 @@
 """Document ingestion service."""
-from .ingest import DocumentIngester, ingest_documents
 
-__all__ = ["DocumentIngester", "ingest_documents"]
+from .ingest_documents import ingest_documents
+from .pinecode_ingester import PineconeIngester
+
+__all__ = ["PineconeIngester", "ingest_documents"]

@@ -1,11 +1,12 @@
-from langchain_groq.chat_models import ChatGroq
 from itertools import cycle
-from langchain_google_genai.chat_models import ChatGoogleGenerativeAI
-from typing import Dict, Any
-from langchain_openai import ChatOpenAI
+from typing import Any, Dict
+
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
+from langchain_openai import ChatOpenAI
+
 from sahiloan_chatbot import settings
+
 
 class LLMFactory:
     DEFAULT_TEMPERATURE = 0.0
@@ -58,15 +59,9 @@ class LLMFactory:
         )
 
     def _init_gemini(self):
-        self.gemini_2_5_flash_lite = self._build_gemini(
-            settings.GEMINI_2_5_FLASH_LITE_MODEL,
-            settings.GEMINI_API_KEY1
-        )
-    
-        self.gemini_2_5_flash = self._build_gemini(
-            settings.GEMINI_2_5_FLASH_MODEL,
-            settings.GEMINI_API_KEY1
-        )
+        self.gemini_2_5_flash_lite = self._build_gemini(settings.GEMINI_2_5_FLASH_LITE_MODEL, settings.GEMINI_API_KEY1)
+
+        self.gemini_2_5_flash = self._build_gemini(settings.GEMINI_2_5_FLASH_MODEL, settings.GEMINI_API_KEY1)
 
     def _init_groq(self):
         self.llama_3_3_70b = self._build_groq(
@@ -87,7 +82,7 @@ class LLMFactory:
         )
 
     def _init_rotations(self):
-        # Llama 3.1 8b 
+        # Llama 3.1 8b
         self.llama_8b_50_cycle = self._create_groq_rotation(settings.LLAMA_3_1_8B_MODEL, 50)
         self.llama_8b_200_cycle = self._create_groq_rotation(settings.LLAMA_3_1_8B_MODEL, 200)
         self.llama_70b_cycle = self._create_groq_rotation(settings.LLAMA_3_3_70B_MODEL, 500)
@@ -99,7 +94,7 @@ class LLMFactory:
     # -------------------------
     # Rotation Helper
     # -------------------------
-    def _create_groq_rotation(self, model_name: str, max_tokens: int = None):
+    def _create_groq_rotation(self, model_name: str, max_tokens: int | None = None):
         llms = [
             self._build_groq(model_name, settings.GROQ_API_KEY1, max_tokens),
             self._build_groq(model_name, settings.GROQ_API_KEY2, max_tokens),
@@ -111,7 +106,7 @@ class LLMFactory:
         llms = [
             self._build_gemini(model_name, settings.GEMINI_API_KEY1),
             self._build_gemini(model_name, settings.GEMINI_API_KEY2),
-            self._build_gemini(model_name, settings.GEMINI_API_KEY3)
+            self._build_gemini(model_name, settings.GEMINI_API_KEY3),
         ]
         return cycle(llms)
 
@@ -125,30 +120,16 @@ class LLMFactory:
     # Public APIs
     # -------------------------
     def get_llama_8b_50(self) -> Dict[str, Any]:
-        return self._response(
-            next(self.llama_8b_50_cycle),
-            settings.LLAMA_3_1_8B_MODEL,
-            max_tokens=50
-        )
-    
+        return self._response(next(self.llama_8b_50_cycle), settings.LLAMA_3_1_8B_MODEL, max_tokens=50)
+
     def get_llama_70b_500(self) -> Dict[str, Any]:
-        return self._response(
-            next(self.llama_70b_cycle),
-            settings.LLAMA_3_3_70B_MODEL,
-            max_tokens=500
-        )
-    
+        return self._response(next(self.llama_70b_cycle), settings.LLAMA_3_3_70B_MODEL, max_tokens=500)
+
     def get_gemini_flash(self) -> Dict[str, Any]:
-        return self._response(
-            next(self.gemini_2_5_flash_cycle),
-            settings.GEMINI_2_5_FLASH_MODEL
-        )
-    
+        return self._response(next(self.gemini_2_5_flash_cycle), settings.GEMINI_2_5_FLASH_MODEL)
+
     def get_gemini_flash_lite(self) -> Dict[str, Any]:
-        return self._response(
-            next(self.gemini_2_5_flash_lite_cycle),
-            settings.GEMINI_2_5_FLASH_LITE_MODEL
-        )
+        return self._response(next(self.gemini_2_5_flash_lite_cycle), settings.GEMINI_2_5_FLASH_LITE_MODEL)
 
     def get_llama_8b(self) -> Dict[str, Any]:
         return self._response(self.llama_3_1_8b, settings.LLAMA_3_1_8B_MODEL)

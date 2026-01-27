@@ -1,9 +1,12 @@
 """
 Pinecone client configuration.
 """
-from pinecone import Pinecone
-from sahiloan_chatbot.config import settings
+
 from functools import lru_cache
+
+from pinecone import Pinecone
+
+from sahiloan_chatbot import settings
 
 
 @lru_cache(maxsize=1)

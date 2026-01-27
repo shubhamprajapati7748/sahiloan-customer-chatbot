@@ -1,18 +1,41 @@
 services:
-  agent-api:
-    container_name: sahiloan-chatbot
-    build:
-      context: .
-      dockerfile: Dockerfile
+  # agent-api:
+  #   container_name: sahiloan-chatbot
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8000:8000"
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - sahiloan-chatbot-network
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: chatbot-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Sahiloan#123#321
+      POSTGRES_DB: chatbot-db
     ports:
-      - "8000:8000"
-    env_file:
-      - .env
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
     networks:
       - sahiloan-chatbot-network
 
 volumes:
   data:
+  postgres_data:
 
 networks:
   sahiloan-chatbot-network:

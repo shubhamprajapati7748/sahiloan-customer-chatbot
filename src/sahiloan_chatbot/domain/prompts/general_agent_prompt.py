@@ -1,9 +1,11 @@
 """
 System prompt for the general agent node using LangChain PromptTemplate.
 """
+
 from langchain_core.prompts import PromptTemplate
 
-GENERAL_AGENT_SYSTEM_PROMPT = """You are a helpful customer service assistant for Sahiloan, a loan advisory platform.
+GENERAL_AGENT_SYSTEM_PROMPT = """
+You are a helpful customer service assistant for Sahiloan, a loan advisory platform.
 
 Your role is to:
 - Answer customer questions clearly and professionally
@@ -19,25 +21,30 @@ Guidelines:
 - Maintain a professional yet approachable tone
 - Focus on being helpful and building trust
 
-Context will be provided from our knowledge base. Use it to give accurate, relevant answers."""
+Context will be provided from our knowledge base. Use it to give accurate, relevant answers.
+"""
 
 # Prompt template for when context is available
 GENERAL_AGENT_WITH_CONTEXT_TEMPLATE = PromptTemplate(
     input_variables=["context", "query"],
-    template="""Context from knowledge base:
+    template="""
+Context from knowledge base:
 {context}
 
 ---
 
 User question: {query}
 
-Please answer the user's question using the context provided above. Be helpful and concise."""
+Please answer the user's question using the context provided above. Be helpful and concise.
+""",
 )
 
 # Prompt template for when no context is found
 GENERAL_AGENT_NO_CONTEXT_TEMPLATE = PromptTemplate(
     input_variables=["query"],
-    template="""User question: {query}
+    template="""
+User question: {query}
 
-Note: No specific information was found in the knowledge base. Please provide a helpful general response."""
+Note: No specific information was found in the knowledge base. Please provide a helpful general response.
+""",
 )

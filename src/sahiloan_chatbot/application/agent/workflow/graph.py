@@ -1,9 +1,12 @@
-from .nodes import Nodes
-from .state import ChatState
-from langgraph.graph import StateGraph, START, END
 from functools import lru_cache
 
+from langgraph.graph import END, START, StateGraph
+
+from .nodes import Nodes
+from .state import ChatState
+
 nodes = Nodes()
+
 
 @lru_cache(maxsize=1)
 def create_chat_graph():
@@ -17,13 +20,8 @@ def create_chat_graph():
 
     graph_builder.add_conditional_edges(
         "intent_router",
-        lambda state: state["route_to"], 
-        {
-            "general_agent": "general_agent",
-            "loan_agent": "loan_agent",
-            "document_agent": "document_agent",
-            "end": END
-        }
+        lambda state: state["route_to"],
+        {"general_agent": "general_agent", "loan_agent": "loan_agent", "document_agent": "document_agent", "end": END},
     )
 
     graph_builder.add_edge("general_agent", END)
@@ -33,7 +31,6 @@ def create_chat_graph():
     return graph_builder
 
 
-
 @lru_cache(maxsize=1)
 def create_intent_router_graph():
     graph_builder = StateGraph[ChatState, None, ChatState, ChatState](ChatState)
@@ -41,5 +38,3 @@ def create_intent_router_graph():
     graph_builder.add_edge(START, "intent_router")
     graph_builder.add_edge("intent_router", END)
     return graph_builder
-
-
