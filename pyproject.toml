@@ -29,7 +29,8 @@ dependencies = [
     "langchain-text-splitters (>=1.1.0,<2.0.0)",
     "nest-asyncio (>=1.6.0,<2.0.0)",
     "sqlalchemy (>=2.0.46,<3.0.0)",
-    "psycopg2-binary (>=2.9.11,<3.0.0)"
+    "psycopg2-binary (>=2.9.11,<3.0.0)",
+    "veryfi (>=5.0.0,<6.0.0)"
 ]
 
 [tool.poetry]
