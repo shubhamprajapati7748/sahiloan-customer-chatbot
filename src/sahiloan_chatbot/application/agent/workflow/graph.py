@@ -61,3 +61,11 @@ def create_loan_agent_graph():
     graph_builder.add_conditional_edges("loan_agent", should_continue, ["tool_node", END])
     graph_builder.add_edge("tool_node", "loan_agent")
     return graph_builder
+
+@lru_cache(maxsize=1)
+def create_document_agent_graph():
+    graph_builder = StateGraph[ChatState, None, ChatState, ChatState](ChatState)
+    graph_builder.add_node("document_agent", nodes.document_agent)
+    graph_builder.add_edge(START, "document_agent")
+    graph_builder.add_edge("document_agent", END)
+    return graph_builder

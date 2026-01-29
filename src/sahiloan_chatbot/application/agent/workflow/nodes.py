@@ -1,21 +1,29 @@
 import time
+import os
 from functools import lru_cache
 
 from langchain.messages import AIMessage, ToolMessage
 from langchain_openai import OpenAIEmbeddings
+from langchain_community.document_loaders import (
+    PyPDFLoader,
+    TextLoader,
+    Docx2txtLoader
+)
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from sahiloan_chatbot import logger, settings
 from sahiloan_chatbot.domain.prompts import (
     GENERAL_AGENT_SYSTEM_PROMPT,
     INTENT_ROUTER_SYSTEM_PROMPT,
     LOAN_AGENT_PROMPT,
+    DOCUMENT_AGENT_SYSTEM_PROMPT,
 )
 from sahiloan_chatbot.domain.tools import get_user_loans_tool
 from sahiloan_chatbot.infrastructure.db.pine_cone import get_pinecone_index
 from sahiloan_chatbot.infrastructure.llm_providers import LLMFactory
 
 from .constants import AGENT_ERROR_MESSAGE
-from .schema import RouterSchema
+from .schema import RouterSchema, DocumentSchema
 from .state import ChatState
 
 
@@ -188,5 +196,81 @@ class Nodes:
         logger.info(f"tool_node_completed | latency: {latency:.2f}ms")
         return state
 
+    def load_document(self, file_path: str):
+        try:
+            logger.debug("Document loading from {}", file_path)
+            _, extension = os.path.splitext(file_path.lower())
+            if extension == ".pdf":
+                loader = PyPDFLoader(file_path)
+            elif extension == ".docx" or extension == ".doc":
+                loader = Docx2txtLoader(file_path)
+            elif extension == ".txt":
+                loader = TextLoader(file_path)
+            else:
+                logger.error("Unsupported document type: {}", extension)
+                return []
+            documents = loader.load()
+            logger.debug("Document loaded successfully")
+            return documents
+
+        except Exception as e:
+            logger.exception(f"load_document_error: | type: {type(e).__name__} | message: {str(e)}")
+            return []
+    def chunk_document(self, document,chunk_size:int, chunk_overlap:int):
+        try:
+            logger.debug("Chunking document")
+            text_splitter = RecursiveCharacterTextSplitter(
+                chunk_size=chunk_size,
+                chunk_overlap=chunk_overlap,
+                length_function=len,
+                separators=["\n\n", "\n", ". ", " ", ""]
+            )
+            chunks = text_splitter.split_documents(document)
+            return chunks
+        except Exception as e:
+            logger.error("Error occured while chunking document")
+    def analyse_document(self,chunks,analysis_type:str):
+        try:
+            logger.debug("Analysing document")
+            full_text = "\n\n".join([chunk.page_content for chunk in chunks[:10]])
+            logger.debug(f"full_text: {full_text}")
+            system_msg = [
+                {
+                    "role": "system",
+                    "content": DOCUMENT_AGENT_SYSTEM_PROMPT.prompt,
+                },
+                {
+                    "role": "user",
+                    "content": f"Document: {full_text}",
+                },
+            ]
+            logger.debug(f"system_msg: {system_msg}")
+            
+            llm_fact = self.llm_factory.get_gpt_4o_mini()
+            response = llm_fact["llm"].invoke(system_msg)
+            logger.debug(f"llm used : {llm_fact['model_name']} | response: {response.content}")
+            return response.content
+            
+        except Exception as e:
+            logger.error("Error occured while analysing document")
+            return f"I apologize, but I encountered an error while analyzing the document: {str(e)}"
+
     def document_agent(self, state: ChatState) -> ChatState:
+        logger.info("Document aganet started")
+        node_start = time.perf_counter()
+        document_temp_path=""
+        if(state["document_analysis"].document_path): 
+            document_temp_path = state["document_analysis"].document_path
+        else:
+            logger.error("No document path provided")
+            return self._agent_end_state(state)
+        documents = self.load_document(document_temp_path)
+        chunks = self.chunk_document(documents, chunk_size=1000, chunk_overlap=300)
+        analysis = self.analyse_document(chunks,analysis_type="summary")
+        state["messages"].append(AIMessage(content=analysis))
+        state["route_to"] = "end"
+        state["document_analysis"] = DocumentSchema(document_path=document_temp_path, document_analysis=analysis)
+        latency = (time.perf_counter() - node_start) * 1000
+        logger.info(f"document_agent | latency: {latency:.2f}ms")
         return state
+    
