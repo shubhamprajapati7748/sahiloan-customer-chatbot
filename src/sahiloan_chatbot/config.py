@@ -91,5 +91,12 @@ class Settings(BaseSettings):
     EMBEDDING_MODEL: str = Field(default="text-embedding-3-small", description="Embedding model")
     EMBEDDING_DIMENSIONS: int = Field(default=1024, description="Embedding dimensions")
 
+    # ========================================
+    # EVALUATION SETTINGS
+    # ========================================
+    INTENT_ROUTER_EVAL_DATASET_PATH: str = Field(
+        default="data/evals/intent_router.json", description="Intent router evaluation dataset path"
+    )
+
 
 settings = Settings()
